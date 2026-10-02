@@ -1,0 +1,59 @@
+/* Blackjack-specific table and multi-hand layout. */
+.table-wrap { height: 620px; min-height: 620px; flex: none; }
+.felt-table { top: 8%; bottom: 12%; left: 9%; right: 9%; }
+.table-center { inset: auto; left: 50%; top: 32%; transform: translate(-50%,-50%); width: 56%; }
+.dealer-label { color: #f4d893; font-size: 15px; font-weight: 800; }
+.dealer-label span { display: block; font-size: 11px; color: #b6cdb5; margin-top: 5px; }
+.table-rules { color: #a7c8a5; font-size: 10px; letter-spacing: 1px; text-align: center; line-height: 1.8; }
+.board { flex-wrap: wrap; justify-content: center; }
+.blackjack-seat { width: 215px; max-width: 24%; padding: 10px; }
+.blackjack-seat .seat-name { max-width: 125px; }
+.blackjack-seat .seat-stack small { display: block; font-size: 10px; font-weight: 400; color: #b5c8ac; }
+.player-hands { display: grid; grid-template-columns: repeat(auto-fit,minmax(78px,1fr)); gap: 4px; max-height: 160px; overflow-y: auto; }
+.blackjack-hand { padding: 5px 2px; border: 1px solid #ffffff20; border-radius: 7px; min-width: 0; }
+.blackjack-hand.current-hand { border-color: #ffe091; background: #f2d18a18; }
+.blackjack-hand .seat-cards { flex-wrap: wrap; gap: 2px; }
+.blackjack-hand .card { width: 25px; height: 36px; font-size: 11px; padding: 2px 3px; }
+.blackjack-hand .card span { font-size: 11px; }
+.hand-caption { font-size: 10px; color: #e7d597; line-height: 1.5; margin-top: 5px; }
+.blackjack-seat .seat-action { height: auto; min-height: 15px; white-space: normal; margin-top: 6px; }
+.insurance-badge { font-size: 10px; color: #eccb87; margin-top: 4px; }
+.bet-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: #e7d597; font-size: 13px; }
+.bet-controls label small { display: block; font-size: 10px; color: #96b09b; margin-top: 3px; }
+.bet-controls input { width: 95px; height: 40px; border: 1px solid #7c986d; border-radius: 8px; background: #0c251b; color: #fff5d9; padding: 0 8px; }
+.bottom-panel { flex-wrap: wrap; }
+.action-controls { flex-wrap: wrap; }
+.confirm-actions { display: flex; justify-content: flex-end; gap: 10px; }
+.blackjack-seat.bust { opacity: .85; }
+@media (min-width: 1100px) {
+  .table-wrap { height: 620px; min-height: 620px; flex: none; }
+  .felt-table { top: 8%; bottom: 12%; left: 9%; right: 9%; }
+}
+@media (max-width: 900px) and (min-width: 681px) {
+  .blackjack-seat { width: 170px; }
+  .player-hands { max-height: 150px; }
+  .seat-head { flex-wrap: wrap; }
+}
+@media (max-width: 680px) {
+  .game-header { flex-wrap: wrap; height: auto; min-height: 64px; gap: 8px; padding: 10px; }
+  .table-wrap { height: auto; min-height: 0; display: flex; flex-direction: column; padding: 12px 8px 18px; gap: 15px; }
+  .felt-table { position: relative; inset: auto; order: 0; width: 100%; height: 230px; flex: none; }
+  .table-center { top: 50%; width: 90%; }
+  .seat-layer { position: relative; inset: auto; order: 1; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; width: 100%; }
+  .blackjack-seat { position: relative; left: auto; top: auto; transform: none; width: 100%; max-width: none; min-width: 0; padding: 9px; }
+  .blackjack-seat.active { transform: none; }
+  .blackjack-seat:first-child { grid-column: 1 / -1; border-color: #e7c47999; }
+  .blackjack-seat .seat-name { max-width: 120px; font-size: 12px; }
+  .blackjack-seat .seat-stack { font-size: 15px; }
+  .blackjack-seat .seat-meta { font-size: 10px; }
+  .blackjack-seat .seat-action { font-size: 10px; }
+  .blackjack-seat .seat-cards .card { width: 26px; height: 38px; font-size: 12px; padding: 3px; }
+  .blackjack-seat .seat-cards .card span { font-size: 11px; }
+  .player-hands { max-height: none; }
+  .blackjack-seat.bust { animation: none; }
+  .blackjack-seat.my-turn { animation: none; border-color: #ffe091; box-shadow: 0 0 16px #e7c47977; }
+  .bet-controls { margin-top: 12px; }
+  .bet-controls .button { min-height: 40px; padding: 0 12px; }
+  .action-controls { display: flex; margin-top: 12px; }
+  .action-controls .button { flex: 1; min-width: 82px; padding: 0 10px; }
+}

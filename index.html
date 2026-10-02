@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>廿一点 · 局域网 21 点</title>
+  <link rel="stylesheet" href="/static/style.css?v=20261002-blackjack">
+  <link rel="stylesheet" href="/static/blackjack.css?v=20261002-blackjack">
+  <script src="/static/app.js?v=20261002-blackjack" defer></script>
+</head>
+<body>
+  <main id="home" class="home">
+    <div class="home-glow"></div>
+    <header class="brand"><span class="brand-mark">♠</span><span>廿一点 <small>TWENTY ONE</small></span></header>
+    <section class="hero">
+      <div class="eyebrow"><span class="live-dot"></span> SINGLE DECK · BLACKJACK</div>
+      <h1>离二十一点，<br><em>只差一张好牌。</em></h1>
+      <p>电脑庄家，单副扑克牌。和朋友在同一局域网围桌而坐，最多 5 位闲家，一人也能开局。</p>
+      <div class="home-actions">
+        <button id="open-create" class="button primary"><span>开设房间</span><b>↗</b></button>
+        <button id="open-join" class="button secondary"><span>加入房间</span><b>→</b></button>
+        <button id="resume" class="button secondary hidden"><span>继续牌局</span><b>→</b></button>
+        <button id="return-room" class="button secondary hidden"><span>返回原房间</span><b>→</b></button>
+      </div>
+      <button id="open-settings" class="settings-link">⚙ &nbsp;设置</button>
+    </section>
+    <div class="hero-art" aria-hidden="true"><div class="art-card art-card-1">A<span>♠</span></div><div class="art-card art-card-2">K<span>♥</span></div><div class="art-chip art-chip-1"></div><div class="art-chip art-chip-2"></div></div>
+    <div class="home-footer"><span>NO DOWNLOADS. JUST DEAL.</span><span>BLACKJACK 3:2 · 庄家软 17 停牌</span></div>
+  </main>
+
+  <main id="game" class="game hidden">
+    <header class="game-header">
+      <div class="game-brand"><span class="brand-mark">♠</span><span>廿一点</span><span class="game-divider"></span><span class="room-label">房间 <strong id="room-code">------</strong></span></div>
+      <div class="header-right"><span id="connection" class="connection"><i></i> 已连接</span><button id="copy-link" class="icon-button" title="复制邀请链接">⧉ <span>邀请</span></button><button id="leave" class="icon-button" title="退出房间">退出房间</button></div>
+    </header>
+    <section class="game-content">
+      <div class="table-wrap">
+        <div id="seat-layer" class="seat-layer"></div>
+        <div class="felt-table">
+          <div class="felt-line"></div>
+          <div class="table-center">
+            <div id="street-label" class="street-label">等待开局</div>
+            <div class="dealer-label">电脑庄家 <span id="dealer-total">暗牌保密</span></div><div id="board" class="board"></div><div class="table-rules">BLACKJACK 3:2 · STAND ON ALL 17<br>单副 52 张 · <span id="cards-left">52</span> 张待发</div>
+            <div class="pot-pill"><span class="pot-coin">●</span> 赌场净输赢 <strong id="pot">¥0</strong></div>
+          </div>
+        </div>
+      </div>
+      <section class="bottom-panel">
+        <div class="status-block"><div class="panel-caption">当前牌局</div><div id="status-text" class="status-text">等待玩家加入</div><div id="hand-number" class="status-sub">第 0 局 · 单副牌 21 点</div></div>
+        <div id="host-controls" class="host-controls hidden"><label class="bot-speed" for="bot-speed"><span>庄家行动间隔 <strong id="bot-speed-value">1.1 秒</strong></span><input id="bot-speed" type="range" min="200" max="3000" step="100" value="1100" aria-label="庄家行动间隔"><span class="speed-ends"><span>快</span><span>慢</span></span></label><button id="start-hand" class="button gold">开始下注</button><button id="settle-game" class="button quiet" title="当前局结束后结算并关闭房间">结算</button></div>
+        <div id="rebuy-controls" class="rebuy-controls hidden"><label for="rebuy-amount">重新入座带入 <small>¥5–¥1000，5 的倍数</small></label><input id="rebuy-amount" type="number" min="5" max="1000" step="5" value="500"><button id="rebuy-submit" class="button gold">重新入座</button></div>
+        <div id="rebuy-pending" class="rebuy-pending hidden">已申请重新入座，等待下一局。</div>
+        <div id="bet-controls" class="bet-controls hidden"><label for="bet-amount">本局下注 <small id="bet-hint">5 的倍数</small></label><input id="bet-amount" type="number" min="0.01" step="5" value="10"><button id="bet-submit" class="button gold">确认下注</button><button id="bet-all" class="button quiet">全部筹码</button><button id="bet-skip" class="button quiet">本局旁观</button></div>
+        <div id="insurance-controls" class="action-controls hidden"><button id="insurance" class="button gold">购买保险</button><button id="decline" class="button quiet">不买保险</button></div>
+        <div id="action-controls" class="action-controls hidden"><button id="hit" class="button action-call">要牌</button><button id="stand" class="button gold">停牌</button><button id="double" class="button quiet">加倍</button><button id="split" class="button quiet">分牌</button><button id="surrender" class="button action-fold">投降</button></div>
+      </section>
+      <div class="room-panels">
+        <section class="chat-panel" aria-label="实时聊天">
+          <div class="panel-heading"><strong>实时聊天</strong><span>仅房间玩家可见</span></div>
+          <div id="chat-messages" class="chat-messages" role="log" aria-live="polite"><p class="panel-empty">发送一条消息，和牌友聊聊。</p></div>
+          <form id="chat-form" class="chat-form"><input id="chat-input" type="text" maxlength="200" placeholder="输入消息…" aria-label="聊天消息" autocomplete="off"><button type="submit">发送</button></form>
+        </section>
+        <section id="event-panel" class="event-panel" aria-label="牌局日志">
+          <div class="panel-heading"><strong>牌局日志</strong><button id="toggle-log" type="button" aria-expanded="true" aria-controls="events">隐藏</button></div>
+          <ol id="events" class="event-list" role="log" aria-live="polite"><li class="panel-empty">等待牌局开始…</li></ol>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal-backdrop hidden"><div class="modal">
+    <button id="close-modal" class="modal-close" aria-label="关闭">×</button>
+    <div id="create-form" class="form-view hidden"><div class="modal-kicker">CREATE ROOM</div><h2>开设房间</h2><p>先选好你的昵称和本局带入筹码。</p><label>你的昵称<input id="create-name" maxlength="18" placeholder="输入昵称" autocomplete="nickname"></label><label>带入金额 <small>¥5 – ¥1000，5 的倍数</small><input id="create-buyin" type="number" min="5" max="1000" step="5" value="500"></label><button id="create-submit" class="button primary full">创建并入座 <span>→</span></button></div>
+    <div id="join-form" class="form-view hidden"><div class="modal-kicker">JOIN ROOM</div><h2>加入房间</h2><p>输入房主的局域网 IP 和房间码。</p><label>房主 IP 或地址<input id="join-ip" placeholder="例如 192.168.1.8:8766" autocomplete="url" list="recent-addresses"><datalist id="recent-addresses"></datalist></label><label>房间码<input id="join-room" maxlength="6" placeholder="6 位房间码" autocapitalize="characters"></label><p id="join-return-note" class="return-note hidden">将恢复你在该房间的昵称、筹码和累计输赢，无需重新带入。</p><div id="join-new-fields"><label>你的昵称<input id="join-name" maxlength="18" placeholder="输入昵称" autocomplete="nickname"></label><label>带入金额 <small>¥5 – ¥1000，5 的倍数</small><input id="join-buyin" type="number" min="5" max="1000" step="5" value="500"></label></div><button id="join-submit" class="button primary full">加入牌桌 <span>→</span></button></div>
+    <div id="settings-form" class="form-view hidden"><div class="modal-kicker">SETTINGS</div><h2>设置</h2><p>一张牌桌，几位朋友，刚刚好的游戏之夜。</p><div class="setting-row"><span>人数 / 牌副</span><strong>1–5 位闲家 / 52 张</strong></div><div class="setting-row"><span>庄家</span><strong>电脑 · 软 17 停牌</strong></div><div class="setting-row"><span>赔付</span><strong>普通 1:1 · Blackjack 3:2</strong></div><div class="setting-row"><span>分牌</span><strong>最多 4 手 · 可分后加倍</strong></div><div class="setting-row"><span>分 A</span><strong>仅一次，每手只补一张</strong></div><div class="setting-row"><span>保险 / 晚投降</span><strong>2:1 / 退回一半</strong></div><div class="setting-row"><span>带入 / 下注</span><strong>¥5–1000 / 5 的倍数或全下</strong></div><p>庄家亮 A 时先选择保险；亮 A 或 10 点牌时检查 Blackjack。分牌后的 21 点按普通牌结算。赔付精确至分，半分四舍五入；保险与投降退回金额向下取分。牌不足则整局作废并退还下注。</p><p class="settings-note">带入筹码用作游戏记分，不涉及支付。</p></div>
+    <div id="modal-error" class="form-error hidden"></div>
+  </div></div>
+  <div id="toast" class="toast hidden"></div>
+  <div id="confirm-panel" class="modal-backdrop hidden"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title"><h2 id="confirm-title">确认操作</h2><p id="confirm-text"></p><div class="confirm-actions"><button id="confirm-cancel" class="button quiet">取消</button><button id="confirm-accept" class="button gold">确认</button></div></section></div>
+  <div id="result-banner" class="result-banner hidden"></div>
+  <div id="settlement" class="modal-backdrop hidden"><section class="modal settlement-modal" aria-labelledby="settlement-title"><div class="modal-kicker">FINAL RESULTS</div><h2 id="settlement-title">本场结算</h2><p>房间已结束。排名按净输赢计算。</p><div id="settlement-list" class="settlement-list"></div><button id="settlement-close" class="button primary full">返回首页 <span>→</span></button></section></div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+[project]
+name = "twenty-one-blackjack"
+version = "0.1.0"
+description = "Local-network single-deck blackjack game"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "aiohttp>=3.9,<4",
+]
+
+[tool.uv]
+package = false
